@@ -31,8 +31,7 @@ def hello_world():
 #test
 @app.route("/webhook", methods=['POST'])
 def callback():
-    rerurn 'OK'
-
+    rerurn '200'
 
 #/callback　のリンクにアクセスしたときの処理。webhook用。
 @app.route("/callback", methods=['POST'])
