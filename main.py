@@ -28,6 +28,12 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 def hello_world():
     return "hello world!"
 
+#test
+@app.route("/webhook", methods=['POST'])
+def callback():
+    rerurn 'OK'
+
+
 #/callback　のリンクにアクセスしたときの処理。webhook用。
 @app.route("/callback", methods=['POST'])
 def callback():
