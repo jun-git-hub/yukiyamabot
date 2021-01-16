@@ -13,11 +13,13 @@ def getSnow():
     soup = BeautifulSoup(html_doc, 'html.parser') # BeautifulSoupの初期化
     snow = soup.find_all("dd",{"class": "greport__data__content"})
 
-    print("手稲スキー場の")
+    print("【手稲スキー場】")
     print("24時間積雪量:" + snow[0].text)
     print("山頂の総積雪量:" + snow[1].text)
     print("山麓の総積雪量:" + snow[2].text)
     print("雪質:" + snow[3].text)
+
+    return snow
 
 getSnow()    
 
