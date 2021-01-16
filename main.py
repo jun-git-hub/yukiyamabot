@@ -28,6 +28,11 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 def hello_world():
     return "hello world!"
 
+#test
+@app.route("/webhook", methods=['POST'])
+def callback():
+    rerurn '200'
+
 #/callback　のリンクにアクセスしたときの処理。webhook用。
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -57,10 +62,10 @@ def handle_message(event):
     '''
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=sc.getSnow())
+        TextSendMessage(text=sc.getWeather())
     )
 
-if __name__ == "__main__":
+if __name__ == "__main__" :
 #    app.run()
     port = int(os.getenv("PORT"))
     app.run(host="0.0.0.0", port=port)
