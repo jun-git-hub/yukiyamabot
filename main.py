@@ -49,18 +49,34 @@ def callback():
     return 'OK'
 
 #メッセージ受信時のイベント
+#@handler.add(MessageEvent, message=TextMessage)
+#def handle_message(event):
+ #   '''
+    #line_bot_apiのreply_messageメソッドでevent.message.text(ユーザのメッセージ)を返信
+  #  line_bot_api.reply_message(
+ #       event.reply_token,
+#        TextSendMessage(text=event.message.text))
+ #   '''
+  #  line_bot_api.reply_message(
+  #      event.reply_token,
+  #      TextSendMessage(text=sc.getSnow())
+  #  )
+
+## 2 ##
+###############################################
+#LINEのメッセージの取得と返信内容の設定(オウム返し)
+###############################################
+ 
+#LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
+#def以下の関数を実行します。
+#reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。 
+#第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
+ 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    '''
-    #line_bot_apiのreply_messageメソッドでevent.message.text(ユーザのメッセージ)を返信
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
-    '''
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=sc.getSnow())
-    )
+        TextSendMessage(text=event.message.text)) #ここでオウム返しのメッセー
 
 if __name__ == "__main__" :
 #    app.run()
