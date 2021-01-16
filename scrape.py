@@ -20,7 +20,7 @@ def getSnow():
     print("山麓の総積雪量:" + snow_math[2])
     print("雪質:" + snow_math[3])
 
-getsnow()    
+getSnow()    
 # tags = soup.find_all("dd",{"class": "greport__data__content"})
 
 #print(tags)
