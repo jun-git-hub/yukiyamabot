@@ -3,7 +3,7 @@ import urllib.request
 import json
 import requests
 
-def getSnow():
+def getsnow():
     #手稲スキー場のゲレンデレポートのページ
     url = 'https://sapporo-teine.com/snow/gelande-report'
     #HTTPリクエスト
@@ -19,7 +19,7 @@ def getSnow():
     print("山麓の総積雪量:" + snow[2])
     print("雪質:" + snow[3])
 
-getSnow()    
+getsnow()    
 # tags = soup.find_all("dd",{"class": "greport__data__content"})
 
 #print(tags)
