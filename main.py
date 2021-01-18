@@ -77,7 +77,7 @@ def handle_message(event):
 #        TextSendMessage(text=sc.getSnow())) #ここでオウム返しのメッセー
 
     word = event.message.text
-    result = sc.getNews(word)
+    result = sc.getNews()
 
     line_bot_api.reply_message(
     event.reply_token,
