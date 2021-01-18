@@ -28,7 +28,10 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 def hello_world():
     return "hello world!"
 
-
+#test
+@app.route("/webhook", methods=['POST'])
+def callback():
+    return '200'
 
 #/callback　のリンクにアクセスしたときの処理。webhook用。
 @app.route("/callback", methods=['POST'])
@@ -49,36 +52,20 @@ def callback():
     return 'OK'
 
 #メッセージ受信時のイベント
-#@handler.add(MessageEvent, message=TextMessage)
-#def handle_message(event):
- #   '''
-    #line_bot_apiのreply_messageメソッドでevent.message.text(ユーザのメッセージ)を返信
-  #  line_bot_api.reply_message(
- #       event.reply_token,
-#        TextSendMessage(text=event.message.text))
- #   '''
-  #  line_bot_api.reply_message(
-  #      event.reply_token,
-  #      TextSendMessage(text=sc.getSnow())
-  #  )
-
-## 2 ##
-###############################################
-#LINEのメッセージの取得と返信内容の設定(オウム返し)
-###############################################
- 
-#LINEでMessageEvent（普通のメッセージを送信された場合）が起こった場合に、
-#def以下の関数を実行します。
-#reply_messageの第一引数のevent.reply_tokenは、イベントの応答に用いるトークンです。 
-#第二引数には、linebot.modelsに定義されている返信用のTextSendMessageオブジェクトを渡しています。
- 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    '''
+    #line_bot_apiのreply_messageメソッドでevent.message.text(ユーザのメッセージ)を返信
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text)) #ここでオウム返しのメッセー
+        TextSendMessage(text=event.message.text))
+    '''
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=sc.getSnow())
+    )
 
 if __name__ == "__main__" :
 #    app.run()
-    port = int(os.getenv("PORT"))
+    port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
