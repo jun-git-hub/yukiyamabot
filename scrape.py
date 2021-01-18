@@ -23,7 +23,6 @@ def getSnow():
 
     return snow0
 
-getSnow()    
 
 # tags = soup.find_all("dd",{"class": "greport__data__content"})
 
