@@ -19,7 +19,9 @@ def getSnow():
     print("山麓の総積雪量:" + snow[2].text)
     print("雪質:" + snow[3].text)
 
-    return snow
+    snow0 = snow[0]
+
+    return snow0
 
 getSnow()    
 
