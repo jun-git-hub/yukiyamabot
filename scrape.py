@@ -29,8 +29,6 @@ def getSnow():
 
     print(title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu)
 
-getSnow()
-
 #ライブラリのインポート
 #import requests
 #from bs4 import BeautifulSoup
