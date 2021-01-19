@@ -9,8 +9,8 @@ def getSnow():
 
     #ブラウザによる違いをなくすための合言葉
     ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) '\
-     'AppleWebKit/537.36 (KHTML, like Gecko) '\
-     'Chrome/67.0.3396.99 Safari/537.36 '
+         'AppleWebKit/537.36 (KHTML, like Gecko) '\
+         'Chrome/67.0.3396.99 Safari/537.36 '
     
     #HTTPリクエスト
     html = requests.get(url)
@@ -19,7 +19,7 @@ def getSnow():
     #htmlの解析
     soup = BeautifulSoup(html.content, 'html.parser') 
     
-    snow = soup.find_all("dd",{"class": "greport__data__content"}).text
+    snow = soup.find_all("dd",{"class": "greport__data__content"})
 
     title = "【手稲スキー場】"
     sekisetsu = "24時間積雪量:" + snow[0].text
@@ -27,9 +27,9 @@ def getSnow():
     fumoto = "山麓の総積雪量:" + snow[2].text
     yukishitsu = "雪質:" + snow[3].text
 
-    result = title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu
+    print(title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu)
 
-    return result
+getSnow()
 
 #ライブラリのインポート
 #import requests
