@@ -27,7 +27,7 @@ def getSnow():
     fumoto = "山麓の総積雪量:" + snow[2].text
     yukishitsu = "雪質:" + snow[3].text
 
-    print(title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu)
+    return title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu
 
 #ライブラリのインポート
 #import requests

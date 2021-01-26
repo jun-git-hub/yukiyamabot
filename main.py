@@ -11,6 +11,8 @@ from linebot.models import (
 )
 import os
 
+import scrape
+
 app = Flask(__name__)
 
 #環境変数取得
@@ -45,7 +47,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=result))
+        TextSendMessage(result))
 
 
 if __name__ == "__main__":
