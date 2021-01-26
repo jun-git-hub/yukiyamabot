@@ -43,11 +43,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    result = sc.getSnow()
+    result = scrape.getSnow()
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(result))
+        TextSendMessage(text=result))
 
 
 if __name__ == "__main__":
