@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage, FollowEvent, FlexSendMessage
 )
 import os
 
@@ -39,16 +39,44 @@ def callback():
 
     return 'OK'
 
+#友達登録してくれたときに表示される
+@handler.add(FollowEvent)
+def handle_follow(event):
+    with open('./first_message.json') as f:
+        first_message = json.load(f)
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(alt_text='こんにちは', contents="こんにちは。本アカウントは本日の雪山の状況を自動検索してくれるアカウントです。不具合や機能追加の希望がある方は岡部までお知らせください。" + first_message)
+    )
 
+#スクレイピングの条件分岐、実行、返信
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
-    result = scrape.getSnow()
+    request_message = event.message.text
+    if request_message == "札幌国際":
+        result = scrapeKokusai.getSnow()
+    elif request_message == "手稲":
+        result = scrapeTeine.getSnow()
+    elif request_message == "ルスツ":
+        result = scrapeRusutsu.getSnow()
+    elif request_message == "キロロ":
+        result = scrapeKiroro.getSnow()
+    elif
+        result = "選び直してください。"
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=result))
 
+#実行後のデフォルトメッセージ
+@handler.default()
+def default(event):
+    with open('./first_message.json') as f:
+        saisyohaguu_message = json.load(f)
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(alt_text='どこのスキー場？', contents=first_message)
+    )
 
 if __name__ == "__main__":
 #    app.run()
