@@ -11,7 +11,7 @@ from linebot.models import (
 )
 import os
 
-import scrape
+import scrapeKokusai, scrapeTeine, scrapeRusutsu, scrapeKiroro
 
 app = Flask(__name__)
 
