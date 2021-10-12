@@ -1,12 +1,17 @@
 from flask import Flask, request, abort
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent, FlexSendMessage
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
 import os
-import scrapeKokusai
+
 import scrapeTeine
-import scrapeRusutsu
-import scrapeKiroro
 
 app = Flask(__name__)
 
@@ -34,46 +39,17 @@ def callback():
 
     return 'OK'
 
-#友達登録してくれたときに表示される
-@handler.add(FollowEvent)
-def handle_follow(event):
-    with open('./first_message.json') as f:
-        first_message = json.load(f)
-    line_bot_api.reply_message(
-        event.reply_token,
-        FlexSendMessage(alt_text='こんにちは', contents=first_message)
-    )
 
-#スクレイピングの条件分岐、実行、返信
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    request_message = event.message.text
-    if request_message == "札幌国際":
-        result = scrapeKokusai.getSnow()
-    elif request_message == "手稲":
-        result = scrapeTeine.getSnow()
-    elif request_message == "ルスツ":
-        result = scrapeRusutsu.getSnow()
-    elif request_message == "キロロ":
-        result = scrapeKiroro.getSnow()
-    else
-        result = "選び直してください。"
+
+    result = scrapeTeine.getSnow()
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=result))
 
-#実行後のデフォルトメッセージ
-@handler.default()
-def default(event):
-    with open('./first_message.json') as f:
-        saisyohaguu_message = json.load(f)
-    line_bot_api.reply_message(
-        event.reply_token,
-        FlexSendMessage(alt_text='どこのスキー場？', contents=first_message)
-    )
 
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
