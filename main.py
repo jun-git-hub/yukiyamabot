@@ -1,17 +1,12 @@
 from flask import Flask, request, abort
-
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, FollowEvent, FlexSendMessage
-)
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent, FlexSendMessage
 import os
-
-import scrapeKokusai, scrapeTeine, scrapeRusutsu, scrapeKiroro
+import scrapeKokusai
+import scrapeTeine
+import scrapeRusutsu
+import scrapeKiroro
 
 app = Flask(__name__)
 
@@ -46,7 +41,7 @@ def handle_follow(event):
         first_message = json.load(f)
     line_bot_api.reply_message(
         event.reply_token,
-        FlexSendMessage(alt_text='こんにちは', contents="こんにちは。本アカウントは本日の雪山の状況を自動検索してくれるアカウントです。不具合や機能追加の希望がある方は岡部までお知らせください。" + first_message)
+        FlexSendMessage(alt_text='こんにちは', contents=first_message)
     )
 
 #スクレイピングの条件分岐、実行、返信
@@ -61,7 +56,7 @@ def handle_message(event):
         result = scrapeRusutsu.getSnow()
     elif request_message == "キロロ":
         result = scrapeKiroro.getSnow()
-    elif
+    else
         result = "選び直してください。"
 
     line_bot_api.reply_message(
