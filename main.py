@@ -1,16 +1,10 @@
 from flask import Flask, request, abort
-
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
 import os
+import json
 import scrape
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent, FlexSendMessage
 
 app = Flask(__name__)
 
@@ -20,6 +14,24 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+
+@handler.add(FollowEvent)
+def handle_follow(event):
+    with open('./first_message.json') as f:
+        first_message = json.load(f)
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(alt_text='どちらのスキー場を検討していますか', contents=first_message)
+    )
+
+@handler.default()
+def default(event):
+    with open('./first_message.json') as f:
+        first_message = json.load(f)
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(alt_text='どちらのスキー場を検討していますか', contents=first_message)
+    )
 
 @app.route("/callback", methods=['POST'])
 def callback():
