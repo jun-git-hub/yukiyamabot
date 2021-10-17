@@ -34,12 +34,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    reply_message = []
-    request_message = event.message.text
-    if request_message == '手稲':
-        result = scrape.getSnow()
-    else :
-        result = scrape.getSnow()
+    result = scrape.getSnow()
 
     line_bot_api.reply_message(
         event.reply_token,
