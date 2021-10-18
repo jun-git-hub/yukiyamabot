@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage,FollowEvent, FlexSendMessage, StickerSendMessage
 )
 import os
 
@@ -21,6 +21,14 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    request_message = event.message.text
+    with open('./first_message.json') as f:
+        first_message = json.load(f)
+    reply_messages = first_message
+    line_bot_api.reply_message(event.reply_token, reply_messages)
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -42,9 +50,11 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
-    result = scrape.getSnow()
-
+    if request_message == '手稲':
+        result = scrape.getSnow()
+    else :
+        result = "ほかをにゅうりょく"
+        
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=result))
