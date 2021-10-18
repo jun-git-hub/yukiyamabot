@@ -48,7 +48,7 @@ def getSnow():
 
     rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu
     
-    result = teine_result + "\n" + rusutsu_result
+    return teine_result + "\n" + rusutsu_result
 
 
 
