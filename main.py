@@ -52,10 +52,9 @@ def handle_message(event):
     with open('yukiyamabot/first_message.json') as f:
         first_message = json.load(f)
 
+    reply = [TextSendMessage(text=result), FlexSendMessage(alt_text='どこのスキー場ですか', contents=first_message)]
     line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=result, 'どこ'))
-        #contents=first_message))
+        event.reply_token, reply)
 
 @handler.default()
 def default(event):
