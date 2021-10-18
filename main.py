@@ -43,15 +43,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    with open('yukiyamabot/first_message.json') as f:
-        first_message = json.load(f)
-    reply_messages = first_message
-    line_bot_api.reply_message(event.reply_token, reply_messages)
-    
+
     if request_message == '手稲':
         result = scrape.getSnow()
     else:
-        result = "ほかをにゅうりょく"
+        result = 'ほかをにゅうりょく'
 
     line_bot_api.reply_message(
         event.reply_token,
