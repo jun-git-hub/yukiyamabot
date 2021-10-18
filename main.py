@@ -52,6 +52,8 @@ def handle_message(event):
 
     if request_message == '手稲':
         result = scrape.getSnow()
+    elif request_message == 'ルスツ':
+        result = scrape_rusutsu.getSnow()
     else:
         result = 'ほかをにゅうりょく'
 
