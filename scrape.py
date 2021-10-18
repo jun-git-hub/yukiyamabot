@@ -42,13 +42,13 @@ def getSnow():
     snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"})
 
     title_rusutsu = "【ルスツスキー場】"
-    sekisetsu_rusutsu = "24時間積雪量:" + snow_rusutsu[0].contents[1].text
-    total_sekisetsu_rusutsu = "総積雪量:" + snow_rusutsu[0].contents[3].text
-    yukishitsu_rusutsu = "雪質:" + snow_rusutsu[0].contents[5].text
+    sekisetsu_rusutsu = snow_rusutsu[0].contents[3].text
+    total_sekisetsu_rusutsu = snow_rusutsu[0].contents[1].text
+    yukishitsu_rusutsu = snow_rusutsu[0].contents[5].text
 
     rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu
     
-    return teine_result + "\n" + rusutsu_result
+    return teine_result + "\n---------------\n" + rusutsu_result
 
 
 
