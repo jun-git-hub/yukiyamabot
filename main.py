@@ -22,11 +22,11 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-@handler.add(FollowEvent)
-def handle_follow(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='最初はぐー')
+#@handler.add(FollowEvent)
+#def handle_follow(event):
+#    line_bot_api.reply_message(
+#        event.reply_token,
+#        TextSendMessage(text='最初はぐー')
 
 @app.route("/callback", methods=['POST'])
 def callback():
