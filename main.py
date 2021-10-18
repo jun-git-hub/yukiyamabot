@@ -51,11 +51,11 @@ def handle_message(event):
     request_message = event.message.text
 
     if request_message == '手稲':
-        result = scrape.getSnow()
+        result = scrape.getSnow_teine()
     elif request_message == 'ルスツ':
-        result = scrape_rusutsu.getSnow()
+        result = scrape.getSnow_rusutsu()
     else:
-        result = 'ほかをにゅうりょく'
+        result = '内容を確認して、再度入力してください。'
 
     line_bot_api.reply_message(
         event.reply_token,

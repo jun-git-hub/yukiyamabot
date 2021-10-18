@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
-import json
 
-def getSnow():
+def getSnow_teine():
 
     #ブラウザによる違いをなくすための合言葉
     ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) '\
@@ -28,7 +27,16 @@ def getSnow():
     yukishitsu_teine = "雪質:" + snow_teine[3].text
 
     teine_result = title_teine + "\n" + sekisetsu_teine + "\n" + sancho_teine + "\n" + fumoto_teine + "\n" + yukishitsu_teine
+
+    return teine_result
 #---------------------------------
+def getSnow_rusutsu():
+
+    #ブラウザによる違いをなくすための合言葉
+    ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) '\
+         'AppleWebKit/537.36 (KHTML, like Gecko) '\
+         'Chrome/67.0.3396.99 Safari/537.36 '
+
     #ルスツスキー場のゲレンデレポートのページ
     url_rusutsu = 'https://rusutsu.com/snow-and-weather-report/'
     
@@ -48,7 +56,7 @@ def getSnow():
 
     rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu
     
-    return teine_result + "\n---------------\n" + rusutsu_result
+    return rusutsu_result
 
 
 
