@@ -22,6 +22,12 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+@handler.add(FollowEvent)
+def handle_follow(event):
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text='最初はぐー')
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -53,18 +59,11 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=result))
 
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=result))
-
 @handler.default()
 def default(event):
-    with open('yukiyamabot/first_message.json') as f:
-        first_message = json.load(f)
     line_bot_api.reply_message(
         event.reply_token,
-        FlexSendMessage(alt_text='', contents=first_message)
-    )
+        TextSendMessage(text='どこの'))
 
 if __name__ == "__main__":
 #    app.run()
