@@ -10,8 +10,8 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,FollowEvent, FlexSendMessage, StickerSendMessage
 )
 import os
-
 import scrape
+import json
 
 app = Flask(__name__)
 
