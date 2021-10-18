@@ -48,10 +48,10 @@ def handle_message(event):
         result = scrape.getSnow()
     else:
         result = 'ほかをにゅうりょく'
-    
-    reply = TextSendMessage(text=result, text='どこのスキー場ですか')
+
     line_bot_api.reply_message(
-        event.reply_token, reply)
+        event.reply_token,
+        TextSendMessage(text=result, text='どこのスキー場ですか'))
 
 @handler.default()
 def default(event):
@@ -59,7 +59,7 @@ def default(event):
         first_message = json.load(f)
     line_bot_api.reply_message(
         event.reply_token,
-        FlexSendMessage(alt_text='どこのスキー場を検討していますか', contents=first_message)
+        FlexSendMessage(alt_text='', contents=first_message)
     )
 
 if __name__ == "__main__":
