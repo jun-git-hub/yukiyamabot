@@ -48,11 +48,14 @@ def handle_message(event):
         result = scrape.getSnow()
     else:
         result = 'ほかをにゅうりょく'
+    
+    with open('yukiyamabot/first_message.json') as f:
+        first_message = json.load(f)
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result),
-        'どこのスキー場を検討しているか入力してください。'])
+        TextSendMessage(text=result, 'どこ'))
+        #contents=first_message))
 
 @handler.default()
 def default(event):
