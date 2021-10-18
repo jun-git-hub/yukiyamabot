@@ -51,7 +51,8 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=result))
+        [TextSendMessage(text=result),
+        'どこのスキー場を検討しているか入力してください。'])
 
 @handler.default()
 def default(event):
