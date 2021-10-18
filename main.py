@@ -1,9 +1,17 @@
 from flask import Flask, request, abort
+
+from linebot import (
+    LineBotApi, WebhookHandler
+)
+from linebot.exceptions import (
+    InvalidSignatureError
+)
+from linebot.models import (
+    MessageEvent, TextMessage, TextSendMessage,
+)
 import os
+
 import scrape
-from linebot import LineBotApi, WebhookHandler
-from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 app = Flask(__name__)
 
@@ -34,12 +42,15 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
     result = scrape.getSnow()
 
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=result))
 
+
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
