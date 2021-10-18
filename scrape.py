@@ -1,33 +1,58 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-import requests
 
 def getSnow():
-    #手稲スキー場のゲレンデレポートのページ
-    url = 'https://sapporo-teine.com/snow/gelande-report'
 
     #ブラウザによる違いをなくすための合言葉
     ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) '\
          'AppleWebKit/537.36 (KHTML, like Gecko) '\
          'Chrome/67.0.3396.99 Safari/537.36 '
+
+    #手稲スキー場のゲレンデレポートのページ
+    url_teine = 'https://sapporo-teine.com/snow/gelande-report'
     
     #HTTPリクエスト
-    html = requests.get(url)
-    html_doc = requests.get(url).text
+    html_teine = requests.get(url_teine)
+    html_doc_teine = requests.get(url_teine).text
 
     #htmlの解析
-    soup = BeautifulSoup(html.content, 'html.parser') 
+    soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
     
-    snow = soup.find_all("dd",{"class": "greport__data__content"})
+    snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"})
 
-    title = "【手稲スキー場】"
-    sekisetsu = "24時間積雪量:" + snow[0].text
-    sancho = "山頂の総積雪量:" + snow[1].text
-    fumoto = "山麓の総積雪量:" + snow[2].text
-    yukishitsu = "雪質:" + snow[3].text
+    title_teine = "【手稲スキー場】"
+    sekisetsu_teine = "24時間積雪量:" + snow_teine[0].text
+    sancho_teine = "山頂の総積雪量:" + snow_teine[1].text
+    fumoto_teine = "山麓の総積雪量:" + snow_teine[2].text
+    yukishitsu_teine = "雪質:" + snow_teine[3].text
 
-    return title + "\n" + sekisetsu + "\n" + sancho + "\n" + fumoto + "\n" + yukishitsu
+    teine_result = title_teine + "\n" + sekisetsu_teine + "\n" + sancho_teine + "\n" + fumoto_teine + "\n" + yukishitsu_teine
+#---------------------------------
+    #ルスツスキー場のゲレンデレポートのページ
+    url_rusutsu = 'https://rusutsu.com/snow-and-weather-report/'
+    
+    #HTTPリクエスト
+    html_rusutsu = requests.get(url_rusutsu)
+    html_doc_rusutsu = requests.get(url_rusutsu).text
+
+    #htmlの解析
+    soup_rusutsu = BeautifulSoup(html_rusutsu.content, 'html.parser') 
+
+    snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"})
+
+    title_rusutsu = "【ルスツスキー場】"
+    sekisetsu_rusutsu = "24時間積雪量:" + snow_rusutsu[0].contents[1].text
+    total_sekisetsu_rusutsu = "総積雪量:" + snow_rusutsu[0].contents[3].text
+    yukishitsu_rusutsu = "雪質:" + snow_rusutsu[0].contents[5].text
+
+    rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu
+    
+    result = teine_result + "\n" + rusutsu_result
+
+
+
+
 
 #ライブラリのインポート
 #import requests
