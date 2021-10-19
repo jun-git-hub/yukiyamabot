@@ -59,7 +59,8 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=result))
+        [TextSendMessage(text=result), TextSendMessage(text='再度選んでね。')]
+    )
 
 @handler.default()
 def default(event):
