@@ -73,7 +73,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result), TextSendMessage(text='違うスキー場も見るなら、もう一回選んでね。'), buttons]
+        [TextSendMessage(text=result), buttons]
     )
 
 @handler.default()
