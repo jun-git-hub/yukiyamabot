@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,FollowEvent, FlexSendMessage, StickerSendMessage
+    MessageEvent, TextMessage, TextSendMessage,TemplateSendMessage,ButtonsTemplate
 )
 import os
 import scrape
