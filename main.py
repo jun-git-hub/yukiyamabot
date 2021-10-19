@@ -4,7 +4,7 @@ import json
 from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage, TemplateSendMessage, ButtonsTemplate, MessageAction
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FlexSendMessage
 
 app = Flask(__name__)
 
@@ -22,22 +22,25 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 #        TextSendMessage(text='最初はぐー')
 
 #ボタンの作成
-def make_button_template():
-    message_template = TemplateSendMessage(
-        alt_text="どこのスキー場に行く予定？",
-        template=ButtonsTemplate(
-        alt_text="どこのスキー場に行く予定？",
-            title="どこがいいかな",
-            thumbnail_image_url="https://任意の画像URL.jpg",
-            actions=[
-                MessageAction(
-                label='手稲',
-                text='手稲'
-                ),
-            ]
-        )
-    )
-    return message_template
+#def make_button_template():
+#    message_template = TemplateSendMessage(
+#        alt_text="どこのスキー場に行く予定？",
+#        template=ButtonsTemplate(
+#        alt_text="どこのスキー場に行く予定？",
+#            title="どこがいいかな",
+#            thumbnail_image_url="https://任意の画像URL.jpg",
+#            actions=[
+#                MessageAction(
+#                label='手稲',
+#                text='手稲'
+#                ),
+#            ]
+#        )
+#    )
+#    return message_template
+
+
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -59,6 +62,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+
+    #返答を代入
     request_message = event.message.text
 
     #返答に対しての関数選択
@@ -69,11 +74,13 @@ def handle_message(event):
     else:
         result = '内容を確認して、再度入力してね。'
 
-    buttons = make_button_template()
+    #jsonファイルを読み込み、代入
+    with open('./first_message.json') as f:
+        first_message = json.load(f)
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result), buttons]
+        [TextSendMessage(text=result), FlexSendMessage(alt_text='どこのスキー場に行く予定ですか', contents=first_message)]
     )
 
 @handler.default()
