@@ -28,6 +28,24 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 #        event.reply_token,
 #        TextSendMessage(text='最初はぐー')
 
+#ボタンの作成
+def make_button_template():
+    message_template = TemplateSendMessage(
+        alt_text="どこのスキー場に行く予定？",
+        template=ButtonsTemplate(
+        alt_text="どこのスキー場に行く予定？",
+            title="どこがいいかな",
+            thumbnail_image_url="https://任意の画像URL.jpg",
+            actions=[
+                MessageAction(
+                label='手稲',
+                text='手稲'
+                ),
+            ]
+        )
+    )
+    return message_template
+
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -50,16 +68,19 @@ def callback():
 def handle_message(event):
     request_message = event.message.text
 
+    #返答に対しての関数選択
     if request_message == '手稲':
         result = scrape.getSnow_teine()
     elif request_message == 'ルスツ':
         result = scrape.getSnow_rusutsu()
     else:
-        result = '内容を確認して、再度入力してください。'
+        result = '内容を確認して、再度入力してね。'
+
+    buttons = make_button_template()
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result), TextSendMessage(text='★違うスキー場も見るなら、再度選んでね。見ボタンにしたいところ★')]
+        [TextSendMessage(text=result), TextSendMessage(text='違うスキー場も見るなら、もう一回選んでね。'), buttons]
     )
 
 @handler.default()
