@@ -47,11 +47,11 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['すべての降雪情報', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・グラン・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
+    ski_area_list = ['降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・グラン・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
-    if request_message == 'すべての降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
+    if request_message == '降雪一覧':
+        result = scrape.getSnow_All()
     elif request_message == '手稲':
         result = scrape.getSnow_teine()
     elif request_message == 'ルスツ':
