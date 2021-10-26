@@ -18,7 +18,7 @@ def getSnow_teine():
     #htmlの解析
     soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
     
-    snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"})
+    snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"}, limit=4)
 
     title_teine = "【手稲スキー場】"
     sekisetsu_teine = "24時間積雪量:" + snow_teine[0].text
@@ -47,7 +47,7 @@ def getSnow_rusutsu():
     #htmlの解析
     soup_rusutsu = BeautifulSoup(html_rusutsu.content, 'html.parser') 
 
-    snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"})
+    snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"}, limit=1)
 
     title_rusutsu = "【ルスツスキー場】"
     sekisetsu_rusutsu = snow_rusutsu[0].contents[3].text
@@ -253,17 +253,15 @@ def getSnow_All():
 
     #htmlの解析
     #手稲
-    soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
-    
-    snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"})
+    soup_teine = BeautifulSoup(html_teine.content, 'html.parser', limit=1) 
+    snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"}, limit=1)
 
     title_teine = "【手稲スキー場】"
     sekisetsu_teine = "24時間積雪量:" + snow_teine[0].text
 
     #ルスツ
     soup_rusutsu = BeautifulSoup(html_rusutsu.content, 'html.parser') 
-
-    snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"})
+    snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"}, limit=1)
 
     title_rusutsu = "【ルスツスキー場】"
     sekisetsu_rusutsu = snow_rusutsu[0].contents[3].text
