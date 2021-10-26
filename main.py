@@ -59,7 +59,7 @@ def handle_message(event):
     elif request_message == '国際':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'キロロ':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = scrape.getSnow_kiroro()
     elif request_message == 'ニセコ・グラン・ヒラフ':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '夕張':
