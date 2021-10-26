@@ -1,7 +1,6 @@
 from flask import Flask, request, abort
 import os
 import scrape
-import json
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -48,19 +47,33 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['手稲', 'ルスツ', '国際']
+    ski_area_list = ['すべての降雪情報', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・グラン・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
-    if request_message == '手稲':
+    if request_message == 'すべての降雪情報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '手稲':
         result = scrape.getSnow_teine()
     elif request_message == 'ルスツ':
         result = scrape.getSnow_rusutsu()
+    elif request_message == '国際':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'キロロ':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'ニセコ・グラン・ヒラフ':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '夕張':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '朝里':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '美唄':
+        result = 'ごめんなさい。まだ準備中です。'
     else:
-        result = '内容を確認して、再度入力してください。'
+        result = '内容を確認して、再度入力してね。'
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result), TextSendMessage(text='違うスキー場も見るなら、再度選んでね。', quick_reply=QuickReply(items=items))]
+        [TextSendMessage(text=result), TextSendMessage(text='違うスキー場も見るなら、もう一回選んでね。', quick_reply=QuickReply(items=items))]
     )
 
 @handler.default()
