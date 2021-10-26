@@ -1,5 +1,7 @@
 from flask import Flask, request, abort
-
+import os
+import scrape
+import json
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -7,11 +9,8 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,FollowEvent, FlexSendMessage, StickerSendMessage
+    MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, MessageAction, QuickReply,
 )
-import os
-import scrape
-import json
 
 app = Flask(__name__)
 
@@ -49,6 +48,8 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
+    ski_area_list = ['手稲', 'ルスツ', '国際']
+    items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     if request_message == '手稲':
         result = scrape.getSnow_teine()
@@ -59,7 +60,7 @@ def handle_message(event):
 
     line_bot_api.reply_message(
         event.reply_token,
-        [TextSendMessage(text=result), TextSendMessage(text='★違うスキー場も見るなら、再度選んでね。見ボタンにしたいところ★')]
+        [TextSendMessage(text=result), TextSendMessage(text='違うスキー場も見るなら、再度選んでね。', quick_reply=QuickReply(items=items))]
     )
 
 @handler.default()
