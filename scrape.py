@@ -246,26 +246,37 @@ def getSnow_All():
     #スキー場のゲレンデレポートのページ
     url_teine = 'https://sapporo-teine.com/snow/gelande-report'
     url_rusutsu = 'https://rusutsu.com/snow-and-weather-report/'
-    
+    url_kiroro = 'https://www.kiroro.co.jp/ja/dashboard/'
+
     #HTTPリクエスト
     html_teine = requests.get(url_teine)
     html_rusutsu = requests.get(url_rusutsu)
+    html_kiroro = requests.get(url_kiroro)
+
+    soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
+    soup_rusutsu = BeautifulSoup(html_rusutsu.content, 'html.parser') 
+    soup_kiroro = BeautifulSoup(html_kiroro.content, 'html.parser') 
 
     #htmlの解析
     #手稲
-    soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
     snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"}, limit=1)
 
     title_teine = "【手稲スキー場】"
     sekisetsu_teine = "24時間積雪量:" + snow_teine[0].text
 
     #ルスツ
-    soup_rusutsu = BeautifulSoup(html_rusutsu.content, 'html.parser') 
     snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"}, limit=1)
 
     title_rusutsu = "【ルスツスキー場】"
     sekisetsu_rusutsu = snow_rusutsu[0].contents[3].text
 
-    All_result = title_teine + sekisetsu_teine + "\n" + title_rusutsu + sekisetsu_rusutsu
+    #キロロ
+    #リスト化されないので、それぞれを検索して値取得
+    kiroro_sekisetsu = soup_kiroro.find(text='24時間降雪量').parent.next_sibling.next_sibling
+
+    title_kiroro = "【キロロリゾート】"
+    sekisetsu_kiroro = "24時間積雪量:" + kiroro_sekisetsu.text
+
+    All_result = title_teine + sekisetsu_teine + "\n" + title_rusutsu + sekisetsu_rusutsu + "\n" + title_kiroro + sekisetsu_kiroro
 
     return All_result
