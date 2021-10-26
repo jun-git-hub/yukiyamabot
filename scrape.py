@@ -262,7 +262,7 @@ def getSnow_All():
     snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"}, limit=1)
 
     title_teine = "【手稲スキー場】"
-    sekisetsu_teine = "24時間積雪量:" + snow_teine[0].text
+    sekisetsu_teine = "24時間積雪量" + snow_teine[0].text
 
     #ルスツ
     snow_rusutsu = soup_rusutsu.find_all("li",{"class": "status02"}, limit=1)
@@ -275,8 +275,8 @@ def getSnow_All():
     kiroro_sekisetsu = soup_kiroro.find(text='24時間降雪量').parent.next_sibling.next_sibling
 
     title_kiroro = "【キロロリゾート】"
-    sekisetsu_kiroro = "24時間積雪量:" + kiroro_sekisetsu.text
+    sekisetsu_kiroro = "24時間積雪量" + kiroro_sekisetsu.text
 
-    All_result = title_teine + sekisetsu_teine + "\n" + title_rusutsu + sekisetsu_rusutsu + "\n" + title_kiroro + sekisetsu_kiroro
+    All_result = title_teine + "\n" + sekisetsu_teine + "\n" + title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + title_kiroro + "\n" + sekisetsu_kiroro
 
     return All_result
