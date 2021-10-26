@@ -253,7 +253,7 @@ def getSnow_All():
 
     #htmlの解析
     #手稲
-    soup_teine = BeautifulSoup(html_teine.content, 'html.parser', limit=1) 
+    soup_teine = BeautifulSoup(html_teine.content, 'html.parser') 
     snow_teine = soup_teine.find_all("dd",{"class": "greport__data__content"}, limit=1)
 
     title_teine = "【手稲スキー場】"
