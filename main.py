@@ -58,36 +58,22 @@ def handle_message(event):
 #        result = scrape.yosou()
     elif request_message == '降雪一覧':
         result = scrape.getSnow_All()
-    elif request_message == '手稲':
+    elif request_message == '手稲' or 'ルスツ' or '国際' or 'キロロ' or 'ニセコ・ヒラフ' or '夕張' or  '朝里':
         line_bot_api.reply_message(
             event.reply_token,
             [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
         )
-    elif request_message == 'ルスツ':
-        result = scrape.getSnow_rusutsu()
-    elif request_message == '国際':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == 'キロロ':
-        
-    elif request_message == 'ニセコ・ヒラフ':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == '夕張':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == '朝里':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == '美唄':
-        result = 'ごめんなさい。まだ準備中です。'
 #------------------------------------------
     elif request_message == '手稲 の 朝の降雪情報':
         result = scrape.getSnow_teine()
     elif request_message == '手稲 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'ルスツ の 朝の降雪情報':
-        result = scrape.getSnow_teine()
+        result = scrape.getSnow_rusutsu()
     elif request_message == 'ルスツ の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '国際 の 朝の降雪情報':
-        result = scrape.getSnow_teine()
+        result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '国際 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'キロロ の 朝の降雪情報':
