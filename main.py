@@ -46,42 +46,39 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    request_message_1 = event.message.text
+    request_message = event.message.text
     ski_area_list = ['降雪予想', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・グラン・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     now_or_fore = ['降雪情報', '天気予報']
-    items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{now_fore}")) for now_fore in now_or_fore]
+    items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{request_message} の {now_fore}")) for now_fore in now_or_fore]
 
-    if request_message_1 == '天気予報一覧':
+    if request_message == '天気予報一覧':
         result = scrape.yosou()
-    elif request_message_1 == '降雪情報一覧':
+    elif request_message == '降雪情報一覧':
         result = scrape.getSnow_All()
-    elif request_message_1 == '手稲':
+    elif request_message == '手稲':
         line_bot_api.reply_message(
             event.reply_token,
             [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
         )
-        request_message_2 = event.message.text
-        if request_message_2 == '降雪情報':
-            result = scrape.getSnow_teine()
-        if request_message_2 == '天気予報':
-            result = 'まだです'
-        else:
-            result = '初めからやりなおしてね'
-    elif request_message_1 == 'ルスツ':
+    elif request_message == '手稲の降雪情報':
+        result = scrape.getSnow_teine()
+    elif request_message == '手稲の天気予報':
+        result = 'まだです'
+    elif request_message == 'ルスツ':
         result = scrape.getSnow_rusutsu()
-    elif request_message_1 == '国際':
+    elif request_message == '国際':
         result = 'ごめんなさい。まだ準備中です。'
-    elif request_message_1 == 'キロロ':
+    elif request_message == 'キロロ':
         result = scrape.getSnow_kiroro()
-    elif request_message_1 == 'ニセコ・グラン・ヒラフ':
+    elif request_message == 'ニセコ・グラン・ヒラフ':
         result = 'ごめんなさい。まだ準備中です。'
-    elif request_message_1 == '夕張':
+    elif request_message == '夕張':
         result = 'ごめんなさい。まだ準備中です。'
-    elif request_message_1 == '朝里':
+    elif request_message == '朝里':
         result = 'ごめんなさい。まだ準備中です。'
-    elif request_message_1 == '美唄':
+    elif request_message == '美唄':
         result = 'ごめんなさい。まだ準備中です。'
     else:
         result = '内容を確認して、再度入力してね。'
