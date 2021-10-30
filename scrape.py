@@ -26,7 +26,7 @@ def getSnow_teine():
     fumoto_teine = "山麓の総積雪量:" + snow_teine[2].text
     yukishitsu_teine = "雪質:" + snow_teine[3].text
 
-    teine_result = title_teine + "\n" + sekisetsu_teine + "\n" + sancho_teine + "\n" + fumoto_teine + "\n" + yukishitsu_teine
+    teine_result = title_teine + "\n" + sekisetsu_teine + "\n" + sancho_teine + "\n" + fumoto_teine + "\n" + yukishitsu_teine + "\n" + url_teine
 
     return teine_result
 #---------------------------------
@@ -54,7 +54,7 @@ def getSnow_rusutsu():
     total_sekisetsu_rusutsu = snow_rusutsu[0].contents[1].text
     yukishitsu_rusutsu = snow_rusutsu[0].contents[5].text
 
-    rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu
+    rusutsu_result = title_rusutsu + "\n" + sekisetsu_rusutsu + "\n" + total_sekisetsu_rusutsu + "\n" + yukishitsu_rusutsu + "\n" + url_rusutsu
     
     return rusutsu_result
 
@@ -111,7 +111,7 @@ def getSnow_kiroro():
     fumoto_kiroro = "山麓の総積雪量:" + sousekisetsu_kiroro_fumoto.text
     yukishitsu_kiroro = "雪質:" + kiroro_yukishitu.text
 
-    kiroro_result = title_kiroro + "\n" + sekisetsu_kiroro + "\n" + sancho_kiroro + "\n" + fumoto_kiroro + "\n" + yukishitsu_kiroro
+    kiroro_result = title_kiroro + "\n" + sekisetsu_kiroro + "\n" + sancho_kiroro + "\n" + fumoto_kiroro + "\n" + yukishitsu_kiroro + "\n" + url_kiroro
 
     return kiroro_result
 

@@ -9,7 +9,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, MessageAction, QuickReply,
+    MessageEvent, TextMessage, TextSendMessage, QuickReplyButton, MessageAction, QuickReply, FollowEvent
 )
 
 app = Flask(__name__)
@@ -21,34 +21,35 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-#@handler.add(FollowEvent)
-#def handle_follow(event):
-#    line_bot_api.reply_message(
-#        event.reply_token,
-#        TextSendMessage(text='最初はぐー')
+@handler.add(FollowEvent)
+def handle_follow(event):
+    first_message = 'はじめまして。yukiyamabotです。\n私はおかべさんによって作られました。\nまだ準備中のところもありますが、シーズンにむけて少しずつ整備していくのでお待ち下さい。\nまた、なにか不具合や追加してほしい機能等あれば、気軽におかべさんまでご連絡ください。'
+    ski_area_list = ['降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ]
+    items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
+    line_bot_api.reply_message(
+        event.reply_token,
+        [TextSendMessage(text=first_message), TextSendMessage(text='早速、行く予定のスキー場を選んでみよう！', quick_reply=QuickReply(items=items))]
+    )
 
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
     # handle webhook body
     try:
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return 'OK'
 
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ]
+    ski_area_list = ['降雪一覧', '手稲', 'ルスツ', '国際', 'キロロ', 'ニセコ・ヒラフ', '朝里']
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     now_or_fore = ['朝の降雪情報', '天気予報']
@@ -67,15 +68,15 @@ def handle_message(event):
     elif request_message == 'ルスツ の 朝の降雪情報':
         result = scrape.getSnow_rusutsu()
     elif request_message == '国際 の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = 'ごめんなさい。まだ準備中です。\nhttps://www.sapporo-kokusai.jp/'
     elif request_message == 'キロロ の 朝の降雪情報':
         result = scrape.getSnow_kiroro()
     elif request_message == 'ニセコ・ヒラフ の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = 'ごめんなさい。まだ準備中です。\nhttps://www.grand-hirafu.jp/winter/gelande/business_hours/'
     elif request_message == '夕張 の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = 'ごめんなさい。まだ準備中です。\n'
     elif request_message == '朝里 の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = 'ごめんなさい。まだ準備中です。\nhttps://asari-ski.com/'
 #-------------------------------------------
     elif request_message == '手稲 の 天気予報':
         result = weatherfore.getWeather(141.1998761169903, 43.07739047958601)
