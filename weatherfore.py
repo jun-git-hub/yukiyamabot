@@ -19,6 +19,8 @@ def getWeather(LON, LAN):
     jsondata = data.json()
     
     for hour in jsondata["hourly"]:
-        weather = "-------------------------/n" + str(datetime.datetime.fromtimestamp(hour["dt"])) + "/n" + hour["weather"][0]["description"] + "/n"
-    
+        print("-------------------------/n")
+        print(datetime.datetime.fromtimestamp(hour["dt"])
+        print(hour["weather"][0]["description"])
+        
     return weather
