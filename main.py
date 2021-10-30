@@ -47,10 +47,10 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['天気予想', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・グラン・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
+    ski_area_list = ['天気予想', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
-    now_or_fore = ['降雪情報', '天気予報']
+    now_or_fore = ['朝の降雪情報', '天気予報']
     items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{request_message} の {now_fore}")) for now_fore in now_or_fore]
 
     if request_message == '天気予報':
@@ -63,23 +63,48 @@ def handle_message(event):
             event.reply_token,
             [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
         )
-    elif request_message == '手稲 の 降雪情報':
-        result = scrape.getSnow_teine()
-    elif request_message == '手稲 の 天気予報':
-        result = 'まだです'
     elif request_message == 'ルスツ':
         result = scrape.getSnow_rusutsu()
     elif request_message == '国際':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'キロロ':
-        result = scrape.getSnow_kiroro()
-    elif request_message == 'ニセコ・グラン・ヒラフ':
+        
+    elif request_message == 'ニセコ・ヒラフ':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '夕張':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '朝里':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '美唄':
+        result = 'ごめんなさい。まだ準備中です。'
+#------------------------------------------
+    elif request_message == '手稲 の 朝の降雪情報':
+        result = scrape.getSnow_teine()
+    elif request_message == '手稲 の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'ルスツ の 朝の降雪情報':
+        result = scrape.getSnow_teine()
+    elif request_message == 'ルスツ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '国際 の 朝の降雪情報':
+        result = scrape.getSnow_teine()
+    elif request_message == '国際 の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'キロロ の 朝の降雪情報':
+        result = scrape.getSnow_kiroro()
+    elif request_message == 'キロロ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'ニセコ・ヒラフ の 朝の降雪情報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'ニセコ・ヒラフ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '夕張 の 朝の降雪情報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '夕張 の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '朝里 の 朝の降雪情報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '朝里 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     else:
         result = '内容を確認して、再度入力してね。'
