@@ -59,6 +59,11 @@ def handle_message(event):
 #        result = scrape.yosou()
     elif request_message == '降雪一覧':
         result = scrape.getSnow_All()
+    elif request_message == '手稲' or request_message == 'ルスツ' or request_message == '国際' or request_message == 'キロロ' or request_message == 'ニセコ・ヒラフ' or request_message == '夕張' or request_message ==  '朝里':
+        line_bot_api.reply_message(
+            event.reply_token,
+            [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
+        )
 #------------------------------------------
     elif request_message == '手稲 の 朝の降雪情報':
         result = scrape.getSnow_teine()
@@ -90,11 +95,6 @@ def handle_message(event):
     elif request_message == '朝里 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
 #-----------------------------------------
-    elif request_message == '手稲' or 'ルスツ' or '国際' or 'キロロ' or 'ニセコ・ヒラフ' or '夕張' or  '朝里':
-        line_bot_api.reply_message(
-            event.reply_token,
-            [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
-        )
     else:
         result = '内容を確認して、再度入力してね。'
 
