@@ -48,13 +48,13 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['天気予想', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
+    ski_area_list = ['天気予報一覧', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     now_or_fore = ['朝の降雪情報', '天気予報']
     items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{request_message} の {now_fore}")) for now_fore in now_or_fore]
 
-    if request_message == '天気予報':
+    if request_message == '天気予報一覧':
         result = '準備中'
 #        result = scrape.yosou()
     elif request_message == '降雪一覧':
