@@ -48,16 +48,13 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     request_message = event.message.text
-    ski_area_list = ['天気予報一覧', '降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ,'美唄' ]
+    ski_area_list = ['降雪一覧', '手稲', 'ルスツ', '国際','キロロ' ,'ニセコ・ヒラフ' ,'夕張' ,'朝里' ]
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     now_or_fore = ['朝の降雪情報', '天気予報']
     items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{request_message} の {now_fore}")) for now_fore in now_or_fore]
 
-    if request_message == '天気予報一覧':
-        result = '準備中'
-#        result = scrape.yosou()
-    elif request_message == '降雪一覧':
+    if request_message == '降雪一覧':
         result = scrape.getSnow_All()
     elif request_message == '手稲' or request_message == 'ルスツ' or request_message == '国際' or request_message == 'キロロ' or request_message == 'ニセコ・ヒラフ' or request_message == '夕張' or request_message ==  '朝里':
         line_bot_api.reply_message(
@@ -83,17 +80,17 @@ def handle_message(event):
     elif request_message == '手稲 の 天気予報':
         result = weatherfore.getWeather(141.1998761169903, 43.07739047958601)
     elif request_message == 'ルスツ の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(140.8979434319387, 42.75160066509518)
     elif request_message == '国際 の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(141.08265377227207, 43.07277387513593)
     elif request_message == 'キロロ の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(140.98941768826262, 43.06829870927434)
     elif request_message == 'ニセコ・ヒラフ の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(140.6984933862197, 42.862056223792045)
     elif request_message == '夕張 の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(141.9693637694675, 43.051062010732416)
     elif request_message == '朝里 の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
+        result = weatherfore.getWeather(141.03672335380196, 43.14336386412604)
 #-----------------------------------------
     else:
         result = '内容を確認して、再度入力してね。'
