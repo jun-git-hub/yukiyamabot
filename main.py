@@ -51,6 +51,7 @@ def handle_message(event):
     items = [QuickReplyButton(action=MessageAction(label=f"{ski_area}", text=f"{ski_area}")) for ski_area in ski_area_list]
 
     now_or_fore = ['降雪情報', '天気予報']
+    items_2 = [QuickReplyButton(action=MessageAction(label=f"{now_fore}", text=f"{now_fore}")) for now_fore in now_or_fore]
 
     if request_message_1 == '天気予報一覧':
         result = scrape.yosou()
@@ -59,7 +60,7 @@ def handle_message(event):
     elif request_message_1 == '手稲':
         line_bot_api.reply_message(
             event.reply_token,
-            [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=now_or_fore))]
+            [TextSendMessage(text='何を確認しますか？', quick_reply=QuickReply(items=items_2))]
         )
         request_message_2 = event.message.text
         if request_message_2 == '降雪情報':
