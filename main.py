@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import os
 import scrape
+import weatherfore
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -66,32 +67,34 @@ def handle_message(event):
 #------------------------------------------
     elif request_message == '手稲 の 朝の降雪情報':
         result = scrape.getSnow_teine()
-    elif request_message == '手稲 の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'ルスツ の 朝の降雪情報':
         result = scrape.getSnow_rusutsu()
-    elif request_message == 'ルスツ の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '国際 の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == '国際 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'キロロ の 朝の降雪情報':
         result = scrape.getSnow_kiroro()
-    elif request_message == 'キロロ の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
     elif request_message == 'ニセコ・ヒラフ の 朝の降雪情報':
-        result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == 'ニセコ・ヒラフ の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '夕張 の 朝の降雪情報':
         result = 'ごめんなさい。まだ準備中です。'
-    elif request_message == '夕張 の 天気予報':
-        result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '朝里 の 朝の降雪情報':
+        result = 'ごめんなさい。まだ準備中です。'
+#-------------------------------------------
+    elif request_message == '手稲 の 天気予報':
+        result = weatherfore(50,50)
+    elif request_message == 'ルスツ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '国際 の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'キロロ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == 'ニセコ・ヒラフ の 天気予報':
+        result = 'ごめんなさい。まだ準備中です。'
+    elif request_message == '夕張 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '朝里 の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
+#-----------------------------------------
     else:
         result = '内容を確認して、再度入力してね。'
 
