@@ -76,7 +76,7 @@ def handle_message(event):
         result = 'ごめんなさい。まだ準備中です。'
 #-------------------------------------------
     elif request_message == '手稲 の 天気予報':
-        result = weatherfore(50,50)
+        result = weatherfore.getWeather(50,50)
     elif request_message == 'ルスツ の 天気予報':
         result = 'ごめんなさい。まだ準備中です。'
     elif request_message == '国際 の 天気予報':
